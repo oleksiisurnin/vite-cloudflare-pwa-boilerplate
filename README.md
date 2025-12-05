@@ -1,6 +1,113 @@
-# React + TypeScript + Vite
+# React + TypeScript + Vite + Cloudflare Workers + Better Auth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This template provides a minimal setup to get React working in Vite with HMR, Cloudflare Workers, and Better Auth with D1 database.
+
+## Features
+
+- ⚡️ Vite for fast development
+- ⚛️ React 19 with TypeScript
+- ☁️ Cloudflare Workers for serverless deployment
+- 🔐 Better Auth for authentication
+- 💾 Cloudflare D1 for database
+- 🎨 Tailwind CSS + shadcn/ui components
+- 📱 PWA support
+
+## Better Auth Setup
+
+This project includes Better Auth configured to work with Cloudflare D1.
+
+### 1. Create a D1 Database
+
+```bash
+# Create a local D1 database for development
+npx wrangler d1 create better-auth-db
+
+# This will output a database_id. Update wrangler.jsonc with this ID.
+```
+
+### 2. Update wrangler.jsonc
+
+Update the `database_id` in `wrangler.jsonc` with the ID from step 1:
+
+```jsonc
+"d1_databases": [
+  {
+    "binding": "DB",
+    "database_name": "better-auth-db",
+    "database_id": "your-database-id-here" // Replace with your actual ID
+  }
+]
+```
+
+### 3. Set Environment Variables
+
+For local development, create a `.env` file (or use wrangler secrets for production):
+
+```bash
+# .env
+BETTER_AUTH_SECRET=your-secret-key-here-change-in-production
+BETTER_AUTH_URL=http://localhost:8787
+```
+
+For production, set secrets using Wrangler:
+
+```bash
+wrangler secret put BETTER_AUTH_SECRET
+wrangler secret put BETTER_AUTH_URL
+```
+
+### 4. Run Database Migrations
+
+Better Auth will automatically create the necessary tables on first run, or you can use the Better Auth CLI:
+
+```bash
+npx better-auth generate
+npx better-auth migrate
+```
+
+### 5. Development
+
+```bash
+npm run dev
+```
+
+The app will be available at `http://localhost:8787` with Better Auth endpoints at `/api/auth/*`.
+
+### 6. Using Auth in Your Components
+
+```tsx
+import { useSession, signIn, signUp, signOut } from "@/lib/auth-client";
+
+function MyComponent() {
+  const { data: session, isPending } = useSession();
+
+  if (isPending) return <div>Loading...</div>;
+  
+  if (!session) {
+    return (
+      <div>
+        <button onClick={() => signIn.email({ email: "...", password: "..." })}>
+          Sign In
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <p>Welcome, {session.user.email}!</p>
+      <button onClick={() => signOut()}>Sign Out</button>
+    </div>
+  );
+}
+```
+
+## Deployment
+
+```bash
+npm run build
+npm run deploy
+```
 
 Currently, two official plugins are available:
 
