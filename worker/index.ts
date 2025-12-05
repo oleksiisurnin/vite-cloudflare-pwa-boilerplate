@@ -7,7 +7,7 @@ export default {
     // Handle Better Auth routes
     if (url.pathname.startsWith("/api/auth")) {
       const authEnv = {
-        BETTER_AUTH_URL: "BETTER_AUTH_URL" in env ? env.BETTER_AUTH_URL : undefined,
+        BETTER_AUTH_URL: "VITE_BETTER_AUTH_URL" in env ? env.VITE_BETTER_AUTH_URL : undefined,
         BETTER_AUTH_SECRET: "BETTER_AUTH_SECRET" in env ? env.BETTER_AUTH_SECRET : undefined,
       };
       const auth = createAuth(env.DB, authEnv);

@@ -46,14 +46,14 @@ For local development, create a `.env` file (or use wrangler secrets for product
 ```bash
 # .env
 BETTER_AUTH_SECRET=your-secret-key-here-change-in-production
-BETTER_AUTH_URL=http://localhost:8787
+VITE_BETTER_AUTH_URL=http://localhost:3000
 ```
 
 For production, set secrets using Wrangler:
 
 ```bash
 wrangler secret put BETTER_AUTH_SECRET
-wrangler secret put BETTER_AUTH_URL
+wrangler secret put VITE_BETTER_AUTH_URL
 ```
 
 ### 4. Run Database Migrations
@@ -61,8 +61,10 @@ wrangler secret put BETTER_AUTH_URL
 Better Auth will automatically create the necessary tables on first run, or you can use the Better Auth CLI:
 
 ```bash
-npx better-auth generate
-npx better-auth migrate
+npx @better-auth/cli generate --config ./src/lib/better-auth.config.ts --output ./migrations/init.sql
+npx wrangler d1 migrations apply better-auth-db --local
+
+npx wrangler d1 migrations apply better-auth-db --remove
 ```
 
 ### 5. Development
