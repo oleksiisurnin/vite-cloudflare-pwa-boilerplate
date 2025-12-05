@@ -64,7 +64,7 @@ Better Auth will automatically create the necessary tables on first run, or you 
 npx @better-auth/cli generate --config ./src/lib/better-auth.config.ts --output ./migrations/init.sql
 npx wrangler d1 migrations apply better-auth-db --local
 
-npx wrangler d1 migrations apply better-auth-db --remove
+npx wrangler d1 migrations apply better-auth-db --remote
 ```
 
 ### 5. Development
@@ -73,7 +73,7 @@ npx wrangler d1 migrations apply better-auth-db --remove
 npm run dev
 ```
 
-The app will be available at `http://localhost:8787` with Better Auth endpoints at `/api/auth/*`.
+The app will be available at `http://localhost:3000` with Better Auth endpoints at `/api/auth/*`.
 
 ### 6. Using Auth in Your Components
 
