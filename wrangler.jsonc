@@ -5,7 +5,7 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "vite-cloudflare-pwa-boilerplate",
-	"main": "worker/index.ts",
+	"main": "server.ts",
 	"compatibility_date": "2025-12-05",
 	"assets": {
 		"not_found_handling": "single-page-application"
