@@ -9,7 +9,8 @@ This template provides a minimal setup to get React working in Vite with HMR, Cl
 - ☁️ Cloudflare Workers for serverless deployment
 - 🔐 Better Auth for authentication
 - 💾 Cloudflare D1 for database
-- 🎨 Tailwind CSS + shadcn/ui components
+- 🎨 Tailwind CSS for styling
+- 🧩 shadcn/ui for customizable components
 - 📱 PWA support
 
 ## Better Auth Setup
@@ -103,6 +104,30 @@ function MyComponent() {
   );
 }
 ```
+
+## UI Components (shadcn/ui)
+
+This project uses [shadcn/ui](https://ui.shadcn.com/) for UI components. The components are located in `src/components/ui`.
+
+### Adding Components
+
+To add a new component, use the shadcn CLI:
+
+```bash
+npx shadcn@latest add [component-name]
+```
+
+For example, to add a button:
+
+```bash
+npx shadcn@latest add button
+```
+
+This will download the component source code to `src/components/ui/button.tsx`.
+
+### Customization
+
+You can customize the theme in `src/index.css` and the tailwind configuration.
 
 ## Deployment
 
