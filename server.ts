@@ -3,6 +3,7 @@ import { httpServerHandler } from "cloudflare:node";
 import express from "express";
 import { createAuth } from "./src/lib/auth.js";
 import { toNodeHandler } from "better-auth/node";
+import apiRouter from "./src/api/index.js";
 
 const app = express();
 
@@ -20,16 +21,7 @@ app.use("/api/auth/", (req, res) => {
 });
 
 // Handle other API routes
-app.get("/api", (_req, res) => {
-	res.json({
-		name: "Cloudflare",
-	});
-});
-
-// Health check endpoint (from user snippet, keeping it as it's useful)
-app.get("/", (_req, res) => {
-	res.json({ message: "Express.js running on Cloudflare Workers!" });
-});
+app.use("/api", apiRouter);
 
 const PORT = 3000;
 
